@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Client-Side Video Capture Demo</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .video-box { width: 320px; height: 240px; background: #000; border-radius: 8px; }
+    .controls { margin-top: 10px; display: flex; gap: 8px; }
+    button { padding: 8px 12px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <h3>Webcam Preview & Recording</h3>
+  
+  <!-- Live feed and playback elements -->
+  <video id="preview" class="video-box" autoplay muted playsinline></video>
+  <video id="playback" class="video-box" controls style="display: none;"></video>
+
+  <div class="controls">
+    <button id="startCamBtn">Enable Camera</button>
+    <button id="recordBtn" disabled>Start Recording</button>
+    <button id="stopBtn" disabled>Stop Recording</button>
+  </div>
+
+  <script>
+    let mediaStream = null;
+    let mediaRecorder = null;
+    let recordedChunks = [];
+
+    const preview = document.getElementById('preview');
+    const playback = document.getElementById('playback');
+    const startCamBtn = document.getElementById('startCamBtn');
+    const recordBtn = document.getElementById('recordBtn');
+    const stopBtn = document.getElementById('stopBtn');
+
+    // 1. Request camera permissions
+    startCamBtn.addEventListener('click', async () => {
+      try {
+        mediaStream = await navigator.mediaDevices.getUserMedia({ 
+          video: { width: 640, height: 480 }, 
+          audio: false 
+        });
+        preview.srcObject = mediaStream;
+        startCamBtn.disabled = true;
+        recordBtn.disabled = false;
+      } catch (err) {
+        console.error("Camera access denied or unavailable:", err);
+      }
+    });
+
+    // 2. Start recording to memory
+    recordBtn.addEventListener('click', () => {
+      recordedChunks = [];
+      mediaRecorder = new MediaRecorder(mediaStream, { mimeType: 'video/webm' });
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          recordedChunks.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = () => {
+        // Create an in-memory blob URL to preview the recording
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        playback.src = URL.createObjectURL(blob);
+        preview.style.display = 'none';
+        playback.style.display = 'block';
+
+        // Stop the live camera tracks to turn off the webcam light
+        mediaStream.getTracks().forEach(track => track.stop());
+      };
+
+      mediaRecorder.start();
+      recordBtn.disabled = true;
+      stopBtn.disabled = false;
+    });
+
+    // 3. Stop recording
+    stopBtn.addEventListener('click', () => {
+      mediaRecorder.stop();
+      stopBtn.disabled = true;
+    });
+  </script>
+</body>
+</html>
