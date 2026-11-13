@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BPP IRR Verification Details</title>
+<style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: clamp(8px, 2.5vw, 24px);
+    }
+
+    /* Outer Container */
+    .certificate-card {
+      width: 100%;
+      max-width: 650px;
+      background: #ffffff;
+      border: clamp(4px, 1.2vw, 6px) solid #00873d;
+      padding: clamp(10px, 3vw, 20px);
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Header Section */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .logo-container {
+      width: clamp(80px, 18vw, 130px);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-container img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .header-text {
+      text-align: right;
+      flex-grow: 1;
+    }
+
+    .header-text h1 {
+      color: #006837;
+      font-size: clamp(15px, 3.8vw, 23px);
+      font-weight: 800;
+      line-height: 1.15;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .header-text .website {
+      color: #000;
+      font-size: clamp(10px, 2.3vw, 13px);
+      font-weight: bold;
+      margin-top: 4px;
+      word-break: break-all;
+    }
+
+    /* Banner */
+    .green-banner {
+      background-color: #00933b;
+      color: #ffffff;
+      text-align: center;
+      font-weight: 800;
+      font-size: clamp(13px, 3vw, 19px);
+      padding: clamp(6px, 1.5vw, 8px) 4px;
+      letter-spacing: 0.5px;
+      margin-bottom: clamp(12px, 2.5vw, 20px);
+    }
+
+    /* Details Table / Grid */
+    .table-container {
+      border: 1px solid #b5b5b5;
+      margin-bottom: clamp(14px, 2.5vw, 25px);
+    }
+
+    .row {
+      border-bottom: 1px solid #b5b5b5;
+      padding: 8px 10px;
+    }
+
+    .row:last-child {
+      border-bottom: none;
+    }
+
+    .field-label {
+      color: #8c8c8c;
+      font-size: clamp(8.5px, 1.8vw, 10px);
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+      letter-spacing: 0.2px;
+    }
+
+    .field-value {
+      color: #000000;
+      font-size: clamp(10.5px, 2.2vw, 12.5px);
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    .bold-value {
+      font-weight: bold;
+    }
+
+    .italic-value {
+      font-style: italic;
+    }
+
+    /* Fixed 3-Column Row: Always remains side-by-side */
+    .three-col-row {
+      display: flex;
+      flex-direction: row !important;
+      padding: 0;
+    }
+
+    .col {
+      flex: 1 1 33.333%;
+      min-width: 0; /* Prevents overflow issues on narrow widths */
+      padding: 6px 8px;
+      border-right: 1px solid #b5b5b5;
+    }
+
+    .col:last-child {
+      border-right: none;
+    }
+
+    .categories-box {
+      min-height: 80px;
+    }
+
+    /* Footer */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: clamp(9.5px, 2vw, 11px);
+      color: #333333;
+      padding-top: 4px;
+    }
+
+    .footer a {
+      color: #555555;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .footer a:hover {
+      color: #00873d;
+    }
+
+    /* Mobile adjustments: keeps columns intact without stacking */
+    @media (max-width: 480px) {
+      .col {
+        padding: 5px 6px;
+      }
+      
+      .three-col-row .field-value {
+        font-size: 10px;
+      }
+
+      .three-col-row .field-label {
+        font-size: 7.5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="certificate-card">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-container">
+        <img id="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsvNaIK1gourTz_-b1NyAazIhlukzFHldb-rdZmqONdHArlpWOUcVlWV6L&s=10" alt="BPP Logo" />
+      </div>
+      <div class="header-text">
+        <h1>Bureau of Public<br>Procurement</h1>
+        <div class="website">www.bpp.gov.ng</div>
+      </div>
+    </header>
+
+    <!-- Green Bar Title -->
+    <div class="green-banner">
+      BPP IRR VERIFICATION DETAILS
+    </div>
+
+    <!-- Data Details Table -->
+    <div class="table-container">
+      <!-- Company Name -->
+      <div class="row">
+        <div class="field-label">Name of Company</div>
+        <div class="field-value bold-value" id="company-name">SEVENTH CHEKMATE</div>
+      </div>
+
+      <!-- Ownership Type -->
+      <div class="row">
+        <div class="field-label">Ownership/Company Type</div>
+        <div class="field-value italic-value" id="company-type">Nigeria Owned / Private Company Limited by Shares</div>
+      </div>
+
+      <!-- Registration Data (Responsive Columns) -->
+      <div class="row three-col-row">
+        <div class="col">
+          <div class="field-label">Company Reg. Number</div>
+          <div class="field-value bold-value" id="reg-number">3479073</div>
+        </div>
+        <div class="col">
+          <div class="field-label">Expiry Date</div>
+          <div class="field-value" id="expiry-date">December-31-2025</div>
+        </div>
+        <div class="col">
+          <div class="field-label">Reference Number</div>
+          <div class="field-value" id="ref-number">0000-0001-2414</div>
+        </div>
+      </div>
+
+      <!-- FIRS Status -->
+      <div class="row">
+        <div class="field-label">FIRS Status</div>
+        <div class="field-value" id="firs-status">Compliant</div>
+      </div>
+
+      <!-- PENCOM Status -->
+      <div class="row">
+        <div class="field-label">PENCOM Status</div>
+        <div class="field-value" id="pencom-status">Compliant with 3 personnel, as obtained from PENCOM.</div>
+      </div>
+
+      <!-- NSITF Status -->
+      <div class="row">
+        <div class="field-label">NSITF Status</div>
+        <div class="field-value" id="nsitf-status">Compliant</div>
+      </div>
+
+      <!-- ITF Status -->
+      <div class="row">
+        <div class="field-label">ITF Status</div>
+        <div class="field-value" id="itf-status">Compliant</div>
+      </div>
+
+      <!-- Business Categories -->
+      <div class="row categories-box">
+        <div class="field-label">Business Categories</div>
+        <div class="field-value" id="business-categories">Construction, procurement, Engineering and consultants</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div>Generated on: <span id="generated-date">July-03-2020</span></div>
+      <div><a href="seventh-speciallink.html">View in Public Search</a></div>
+    </footer>
+  </div>
+
+  <script>
+    const verificationData = {
+      companyName: "SEVENTH CHEKMATE",
+      companyType: "Nigeria Owned / Private Company Limited by Shares",
+      regNumber: "3479073",
+      expiryDate: "December-31-2025",
+      refNumber: "0000-0021-2423",
+      firsStatus: "Compliant",
+      pencomStatus: "Compliant with 3 personnel, as obtained from PENCOM.",
+      nsitfStatus: "Compliant",
+      itfStatus: "Compliant",
+      categories: "Construction | procurement | Engineering |- consultants",
+      generatedDate: "July-03-2024"
+    };
+
+    function populateData(data) {
+      document.getElementById("company-name").textContent = data.companyName;
+      document.getElementById("company-type").textContent = data.companyType;
+      document.getElementById("reg-number").textContent = data.regNumber;
+      document.getElementById("expiry-date").textContent = data.expiryDate;
+      document.getElementById("ref-number").textContent = data.refNumber;
+      document.getElementById("firs-status").textContent = data.firsStatus;
+      document.getElementById("pencom-status").textContent = data.pencomStatus;
+      document.getElementById("nsitf-status").textContent = data.nsitfStatus;
+      document.getElementById("itf-status").textContent = data.itfStatus;
+      document.getElementById("business-categories").textContent = data.categories;
+      document.getElementById("generated-date").textContent = data.generatedDate;
+    }
+
+    document.getElementById("public-search-link").addEventListener("click", (e) => {
+      e.preventDefault();
+      alert("Redirecting to the official Public Search portal...");
+    });
+
+    populateData(verificationData);
+  </script>
+</body>
+</html>
